@@ -11,7 +11,15 @@
             Home
           </router-link>
         </li>
-        <li class="nav-item mx-3">
+        <li v-if="isLoggedIn"  class="nav-item mx-3">
+          <router-link
+              :to="{name:'panel'}"
+              class="nav-link"
+          >
+            Panel
+          </router-link>
+        </li>
+        <li v-if="!isLoggedIn" class="nav-item mx-3">
 
           <router-link
               :to="{name:'signin'}"
@@ -20,7 +28,7 @@
             Sign In
           </router-link>
         </li>
-        <li class="nav-item mx-3">
+        <li v-if="!isLoggedIn" class="nav-item mx-3">
 
           <router-link
               :to="{name:'signup'}"
@@ -29,14 +37,8 @@
             Sign Up
           </router-link>
         </li>
-        <li class="nav-item mx-3">
-
-          <router-link
-              :to="{name:'panel'}"
-              class="nav-link"
-          >
-            Panel
-          </router-link>
+        <li v-if="isLoggedIn" class="nav-item mx-3">
+          <a @click="logOut" class="nav-link">Logout</a>
         </li>
       </ul>
     </div>
@@ -44,8 +46,23 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+import {LOGOUT} from "@/store/modules/users/actions.type";
+
 export default {
-  name: "NavBar"
+  name: "NavBar",
+  methods: {
+    logOut() {
+      this.$store
+          .dispatch(`users/${LOGOUT}`,)
+          .then(() => {
+            this.$router.push({name: "home"})
+          });
+    }
+  },
+  computed: {
+    ...mapGetters('users', ['isLoggedIn',])
+  }
 }
 </script>
 
