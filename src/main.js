@@ -11,6 +11,8 @@ import router from '@/router'
 import store from '@/store'
 import UserApiService from "@/services/users.api.service";
 
+
+
 Vue.config.productionTip = false
 UserApiService.init();
 Vue.use(BootstrapVue)

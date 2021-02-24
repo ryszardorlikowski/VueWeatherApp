@@ -1,33 +1,37 @@
-import {SET_ERROR, SET_AUTH, UNSET_AUTH} from "./mutations.type";
-import {SIGNIN, LOGOUT} from "./actions.type";
+import {SET_AUTH, UNSET_AUTH} from "./mutations.type";
+import {SIGNIN, LOGOUT, SIGNUP} from "./actions.type";
 import tokenService from '@/services/token.service'
 import userApiService from '@/services/users.api.service'
 
 const state = {
-    username: {},
+    username: '',
     userLocations: [],
     errors: '',
     isLoggedIn: !!tokenService.getToken()
 }
 
 const actions = {
-    [SIGNIN](context, user) {
+    [SIGNIN](context, userData) {
         return new Promise((resolve, reject) => {
-            userApiService.signIn(user)
+            userApiService.signIn(userData)
                 .then(({data}) => {
                     tokenService.setTokens(data);
-                    context.commit(SET_AUTH, user.username);
+                    context.commit(SET_AUTH, userData.username);
                     resolve(data);
                 })
-                .catch(({response}) => {
-                    let errorMsg;
-                    if (response.status === 401 || response.status === 400) {
-                        errorMsg = 'Incorrect username or password';
-                    } else {
-                        errorMsg = 'Service Unavailable. Please try again later.';
-                    }
-                    context.commit(SET_ERROR, errorMsg);
-                    reject(response);
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+    },
+    [SIGNUP](context, userData) {
+        return new Promise((resolve, reject) => {
+            userApiService.signUp(userData)
+                .then(({data}) => {
+                    resolve(data);
+                })
+                .catch((error) => {
+                    reject(error);
                 });
         });
     },
@@ -42,15 +46,11 @@ const mutations = {
     [SET_AUTH](state, username) {
         state.isLoggedIn = true;
         state.username = username;
-        state.errors = '';
     },
     [UNSET_AUTH](state) {
         state.isLoggedIn = false;
-        state.username = {};
+        state.username = '';
         tokenService.deleteTokens();
-    },
-    [SET_ERROR](state, errors) {
-        state.errors = errors;
     },
 };
 
@@ -58,8 +58,8 @@ const getters = {
     errors(state) {
         return state.errors
     },
-    currentUser(state) {
-        return state.user;
+    getUserName(state) {
+        return state.username;
     },
     userLocations(state) {
         return state.userLocations

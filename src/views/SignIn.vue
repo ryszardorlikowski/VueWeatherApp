@@ -15,8 +15,10 @@
           <div class="text-center py-4 mt-3">
             <button class="btn btn-success" type="submit">Sign in</button>
           </div>
-          <div class="text-danger">
-            {{ errors }}
+          <div class="text-danger  small">
+            <ul class="list-unstyled">
+              <li class="py-1" v-for="error in errors" :key="error.toString()"> {{ error.toString() }}</li>
+            </ul>
           </div>
         </form>
       </div>
@@ -27,7 +29,6 @@
 </template>
 <script>
 import {SIGNIN} from '@/store/modules/users/actions.type'
-import {mapGetters} from 'vuex'
 
 export default {
   name: 'SignIn',
@@ -35,6 +36,7 @@ export default {
     return {
       username: '',
       password: '',
+      errors: ''
 
     }
   },
@@ -43,12 +45,18 @@ export default {
       this.$store
           .dispatch(`users/${SIGNIN}`, {username, password})
           .then(() => {
-            this.$router.push({name: "panel"})
-          })
+            this.errors = '';
+            this.$router.push({name: "home"});
+          }).catch(error => {
+        try {
+          this.errors = error.response.data;
+        } catch (e) {
+
+          this.errors = ['Service unavailable. Try again later']
+        }
+      });
     }
-  },
-  computed: {
-    ...mapGetters('users', ['errors',])
+
   }
 
 
