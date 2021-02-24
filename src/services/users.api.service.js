@@ -17,6 +17,10 @@ const UserApiService = {
 
     signIn(userData) {
         return Vue.axios.post('users/auth/token', userData);
+    },
+
+    signUp(userData) {
+        return Vue.axios.post('users/create', userData);
     }
 }
 

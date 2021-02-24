@@ -11,7 +11,7 @@
             Home
           </router-link>
         </li>
-        <li v-if="isLoggedIn"  class="nav-item mx-3">
+        <li v-if="isLoggedIn" class="nav-item mx-3">
           <router-link
               :to="{name:'panel'}"
               class="nav-link"
@@ -38,7 +38,12 @@
           </router-link>
         </li>
         <li v-if="isLoggedIn" class="nav-item mx-3">
-          <a @click="logOut" class="nav-link">Logout</a>
+          <a @click="logOut" class="nav-link" style="cursor: pointer;">Logout</a>
+        </li>
+
+        <li class="nav-item mx-3" v-if="isLoggedIn">
+          <span class="nav-link font-weight-bold">Hi, {{ getUserName }}!</span>
+
         </li>
       </ul>
     </div>
@@ -48,6 +53,7 @@
 <script>
 import {mapGetters} from "vuex";
 import {LOGOUT} from "@/store/modules/users/actions.type";
+
 
 export default {
   name: "NavBar",
@@ -61,7 +67,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('users', ['isLoggedIn',])
+    ...mapGetters('users', ['isLoggedIn', 'getUserName'])
   }
 }
 </script>
