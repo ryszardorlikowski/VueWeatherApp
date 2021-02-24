@@ -1,19 +1,19 @@
 <template>
   <div id="app">
     <NavBar/>
-    <router-view></router-view>
-    {{ api }}
+    <transition name="fade" mode="out-in">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
 <script>
 import NavBar from "@/components/NavBar";
+
 export default {
   name: 'App',
   data() {
-    return {
-      api: process.env.VUE_APP_BASE_URL,
-    }
+    return {}
   },
   components: {
     NavBar
@@ -28,5 +28,13 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .35s;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>

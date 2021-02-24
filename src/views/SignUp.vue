@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="card w-50 mx-auto mt-5">
+    <div class="card mx-auto mt-5 shadow-longer border-0">
       <div class="card-body p-5">
         <form>
           <p class="h4 py-4">Sign up</p>
@@ -37,5 +37,8 @@ name: "SignUp"
 </script>
 
 <style scoped>
-
+.card {
+  width: 100%;
+  max-width: 500px;
+}
 </style>
