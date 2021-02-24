@@ -1,12 +1,17 @@
 <template>
-<div>
-  Home Vire
-</div>
+  <div>
+    <div style="width: 100vw; height: 50vh">
+      <Map/>
+    </div>
+  </div>
 </template>
 
 <script>
+import Map from "@/components/Map";
+
 export default {
-name: "Home"
+  name: "Home",
+  components: {Map}
 }
 </script>
 
