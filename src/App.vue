@@ -2,6 +2,7 @@
   <div id="app">
     <NavBar/>
     <router-view></router-view>
+    {{ api }}
   </div>
 </template>
 
@@ -9,6 +10,11 @@
 import NavBar from "@/components/NavBar";
 export default {
   name: 'App',
+  data() {
+    return {
+      api: process.env.VUE_APP_BASE_URL,
+    }
+  },
   components: {
     NavBar
   }
