@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="navbar navbar-dark bg-dark">
+    <div class="navbar navbar-dark bg-secondary">
       <a class="navbar-brand" href="#">WeatherApp</a>
       <ul class="navbar-nav flex-row ml-auto">
         <li class="nav-item mx-3">
@@ -43,7 +43,6 @@
 
         <li class="nav-item mx-3" v-if="isLoggedIn">
           <span class="nav-link font-weight-bold">Hi, {{ getUserName }}!</span>
-
         </li>
       </ul>
     </div>
@@ -64,7 +63,8 @@ export default {
           .then(() => {
             this.$router.push({name: "home"})
           });
-    }
+    },
+
   },
   computed: {
     ...mapGetters('users', ['isLoggedIn', 'getUserName'])

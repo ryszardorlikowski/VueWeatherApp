@@ -1,60 +1,53 @@
 <template>
-  <div class="map">
+  <div class="h-100 w-100">
     <l-map
+        @click="mapClicked"
         :zoom="zoom"
         :center="center"
-        :options="mapOptions"
-        style="height: 80%"
-        @update:center="centerUpdate"
-        @update:zoom="zoomUpdate"
+        style="height: 100%"
+        :options="{zoomControl: false}"
     >
       <l-tile-layer
           :url="url"
           :attribution="attribution"
       />
+      <l-control-zoom position="bottomright"></l-control-zoom>
     </l-map>
   </div>
 </template>
 
 <script>
-import { latLng } from "leaflet";
-import { LMap, LTileLayer} from "vue2-leaflet";
+import {LMap, LTileLayer, LControlZoom} from "vue2-leaflet";
 
 export default {
-  name: "Example",
+  name: "Map",
+  props: ['mapPosition', 'mapZoom'],
   components: {
     LMap,
     LTileLayer,
+    LControlZoom
   },
   data() {
     return {
-      zoom: 13,
-      center: latLng(47.41322, -1.219482),
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
-          '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      withPopup: latLng(47.41322, -1.219482),
-      currentZoom: 11.5,
-      currentCenter: latLng(47.41322, -1.219482),
-      marker: latLng(47.413220, -1.219482),
-      mapOptions: {
-        zoomSnap: 0.5
-      },
+          '&copy; WeatherApp RO',
     };
   },
   methods: {
-    zoomUpdate(zoom) {
-      this.currentZoom = zoom;
+    mapClicked(e) {
+      this.$emit('clicked-map-position', e.latlng)
     },
-    centerUpdate(center) {
-      this.currentCenter = center;
+  },
+  computed: {
+    center: function () {
+      return this.mapPosition;
     },
-  }
+    zoom: function () {
+      return this.mapZoom;
+    },
+  },
 };
 </script>
 <style>
-.map{
-  width: 100%;
-  height: 100%;
-}
 </style>

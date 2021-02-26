@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div class="card mx-auto mt-5 shadow-longer border-0">
+  <div class="container my-5">
+    <div class="card shadow-longer bg-secondary mx-auto">
       <div class="card-body p-5">
         <form @submit.prevent="signIn(username, password)">
           <p class="h4 py-4">Sign in</p>
@@ -15,7 +15,7 @@
           <div class="text-center py-4 mt-3">
             <button class="btn btn-success" type="submit">Sign in</button>
           </div>
-          <div class="text-danger  small">
+          <div class="text-light font-weight-bold  small">
             <ul class="list-unstyled">
               <li class="py-1" v-for="error in errors" :key="error.toString()"> {{ error.toString() }}</li>
             </ul>
@@ -37,7 +37,6 @@ export default {
       username: '',
       password: '',
       errors: ''
-
     }
   },
   methods: {
@@ -46,15 +45,11 @@ export default {
           .dispatch(`users/${SIGNIN}`, {username, password})
           .then(() => {
             this.errors = '';
-            this.$router.push({name: "home"});
-          }).catch(error => {
-        try {
-          this.errors = error.response.data;
-        } catch (e) {
-
-          this.errors = ['Service unavailable. Try again later']
-        }
-      });
+            this.$router.push({name: "panel"});
+          })
+          .catch(error => {
+            this.errors = error.response.data;
+          });
     }
 
   }

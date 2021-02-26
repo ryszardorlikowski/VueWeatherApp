@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div class="card mx-auto mt-5 shadow-longer border-0">
+  <div class="container my-5">
+    <div class="card mx-auto shadow-longer bg-secondary">
       <div class="card-body p-5">
         <form @submit.prevent="signUp(username, email, password)">
           <p class="h4 py-4">Sign up</p>
@@ -23,7 +23,7 @@
           <div class="text-center py-4 mt-3">
             <button class="btn btn-success" :disabled="validForm" type="submit">Sign up</button>
           </div>
-          <div class="text-danger small">
+          <div class="text-light small">
             <ul class="list-unstyled">
               <li v-for="error in errors" :key="error.toString()"> {{ error.toString() }}</li>
             </ul>
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import {SIGNUP} from "@/store/modules/users/actions.type";
+import weatherApiService from "@/services/weather.api.service";
 
 export default {
   name: "SignUp",
@@ -52,19 +52,11 @@ export default {
   },
   methods: {
     signUp(username, email, password) {
-      this.$store
-          .dispatch(`users/${SIGNUP}`, {username, email, password,})
-          .then(() => {
-            this.errors = '';
-            this.$router.push({name: "signin"});
-          }).catch(error => {
-        try {
-          this.errors = error.response.data;
-        } catch (e) {
-
-          this.errors = ['Service unavailable. Try again later']
-        }
-
+      weatherApiService.signUp({username, email, password}).then(() => {
+        this.errors = '';
+        this.$router.push({name: "signin"});
+      }).catch(error => {
+        this.errors = error.response.data;
       });
     }
 

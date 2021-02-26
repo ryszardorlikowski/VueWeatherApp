@@ -1,23 +1,36 @@
-/* Forms*/
+html {
+    overflow-x: hidden;
+}
+#app{
+    padding-bottom: 50px;
+}
+
+
+/* Fade in animation */
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .35s;
+}
+
+.fade-enter, .fade-leave-to {
+    opacity: 0;
+}
+
+/* Fade in animation */
+
+
+/* Forms */
 .form-group {
     text-align: left;
     font-size: 12px;
-}
-
-.form-control {
-    border: 0;
-    border-radius: 0;
-    border-bottom: 1px solid gray;
 }
 
 .btn-success {
     border-radius: 0;
     padding: 10px 25px;
 }
-.btn-success:disabled{
+
+.btn-success:disabled {
     opacity: 0.3;
 }
-/*Form*/
-.shadow-longer {
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
-}
+
+/* Form */

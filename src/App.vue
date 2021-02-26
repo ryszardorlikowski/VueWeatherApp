@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="bg-dark text-white">
     <NavBar/>
     <transition name="fade" mode="out-in">
       <router-view></router-view>
@@ -17,24 +17,12 @@ export default {
   },
   components: {
     NavBar
+  },
+  metaInfo: {
+    title: 'WeatherApp'
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .35s;
-}
-
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-}
 </style>

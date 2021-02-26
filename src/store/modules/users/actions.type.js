@@ -1,3 +1,5 @@
 export const SIGNIN = 'signIn'
-export const SIGNUP = 'signUp'
 export const LOGOUT = 'logout'
+export const GET_USER_LOCATIONS = 'getUserLocations'
+export const DELETE_USER_LOCATION = 'deleteUserLocations'
+export const ADD_USER_LOCATION = 'addUserLocations'
